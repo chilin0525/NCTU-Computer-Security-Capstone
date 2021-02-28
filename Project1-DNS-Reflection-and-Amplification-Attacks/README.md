@@ -136,7 +136,7 @@ socket types 分為四類:
 
 		```c
 		struct in_addr {
-			unsigned long s_addr;
+		    unsigned long s_addr;
 		};
 		```	
 
@@ -303,7 +303,7 @@ unsigned long ntohl(unsigned long netlong)
 
 ## socket core function
 
-在上面我們提過 [socket server 與 client 的工作流程與各自公用](#the-client-server-model), 這裡將描述核心 functiton 如何使用
+在上面我們提過 [socket server 與 client 的工作流程與各自功用](#the-client-server-model), 這裡將描述核心 functiton 如何使用
 
 ### socket()
 
