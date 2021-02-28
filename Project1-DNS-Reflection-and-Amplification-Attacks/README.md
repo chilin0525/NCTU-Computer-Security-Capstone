@@ -171,9 +171,8 @@ socket types 分為四類:
 
 	![](img/servent.png)
 
-<br>
 
-* int inet_aton(const char *strptr, struct in_addr *addrptr)
+* int **inet_aton**(const char *strptr, struct in_addr *addrptr)
 	* 作用 : 將 string literal 轉換為 network address 後儲存於第二個 structure type 的參數中
 	* 轉換後的型態為 [network byte order](#network-byte-order)
 	* return 1 : valid
@@ -189,9 +188,7 @@ socket types 分為四類:
 	retval = inet_aton("68.178.157.132", &addrptr);
 	```
 
-<br>
-
-* in_addr_t inet_addr(const char *strptr)
+* in_addr_t **inet_addr**(const char *strptr)
 	* 作用: 將 string linteral 轉換為十進位數字
 	* 轉換後為 [network byte order](#network-byte-order)
 	* example:
@@ -228,9 +225,8 @@ socket types 分為四類:
 
 	可以轉換後為 big endian, 大部份 protocal 也為 big endian
 
-	<br>
 
-* char *inet_ntoa(struct in_addr inaddr)
+* char* **inet_ntoa**(struct in_addr inaddr)
 
 	* 作用: 將 host address 轉換為 string 
 	* example:
@@ -482,7 +478,7 @@ int recvfrom(int sockfd, void *buf, int len, unsigned int flags,
 
 在 application 傳輸資料的過程中, 會需要經由一層層 layer 包裝 packet, 包含加上 source ip address, destination ip address等; 而在接收端, 我們收到 packet 之後要將 packet 的 header 給拆掉並根據 protocal 往上傳遞給各層後最後將 data 傳給 application。
 
-如下圖 non-raw socket 可以繞過 OSI model 將 package 送到 application 中, 因此可以實現 sniffer, IP Spoofing Packets 等功能
+如下圖 non-raw socket 可以繞過 OSI model 將 package 送到 application 中, 因此可以實現 sniffer, IP Spoofing Packets 等功能, 注意 **raw socket requires superuser rights** !!!
 
 <div>
     <img src="img/packet.png" width="550" height="200">
@@ -501,6 +497,11 @@ int recvfrom(int sockfd, void *buf, int len, unsigned int flags,
 ```c
 raw_socket = socket(AF_INET, SOCK_RAW, int protocol);
 ```
+
+<details>
+	<summary>Using raw socket implement ping<summary>
+	
+</details>
 
 ---
 
