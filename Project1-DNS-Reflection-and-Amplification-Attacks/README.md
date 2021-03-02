@@ -74,6 +74,46 @@ socket types 分為四類:
     <img src="img/sop.gif" width="550">
 </div>
 
+### Network Byte Order
+
+我們知道不同電腦架構中會有 Little Endian 與 Big Endian 兩種架構(參考下面圖例)
+
+<div>
+    <img src="img/bigendien.png" width="430" >
+    <img src="img/littleendien.png" width="430">
+</div>
+
+<br>
+
+網路中一樣有此概念, protocal 會說明在傳輸時的 Byte Order 為何, **大部分為 Big Endian**, 然而在電腦與電腦傳輸前都需要先將自己電腦的 byte order(**Host Byte Order**) 轉換為 Network Byte Order 才可以正常傳輸, socket 中定義好了 function 可以做轉換,(如果 host byte order 已為 big endian 則不需要做轉換)
+
+|Function|Description|
+|---|---|
+|htons()|Host to Network Short|
+|htonl()|Host to Network Long|
+|ntohl()|Network to Host Long|
+|ntohs()|Network to Host Short|
+
+function define:
+
+```c
+unsigned short htons(unsigned short hostshort) 
+// This function converts 16-bit (2-byte) quantities 
+// from host byte order to network byte order.
+
+unsigned long htonl(unsigned long hostlong)
+// This function converts 32-bit (4-byte) quantities
+// from host byte order to network byte order.
+
+unsigned short ntohs(unsigned short netshort) 
+// This function converts 16-bit (2-byte) quantities 
+// from network byte order to host byte order.
+
+unsigned long ntohl(unsigned long netlong)
+// This function converts 32-bit quantities 
+// from network byte order to host byte order.
+```
+
 ---
 
 ### socket structure 
@@ -259,47 +299,8 @@ socket types 分為四類:
 		```
 
 
-### Network Byte Order
-
-我們知道不同電腦架構中會有 Little Endian 與 Big Endian 兩種架構(參考下面圖例)
-
-<div>
-    <img src="img/bigendien.png" width="430" >
-    <img src="img/littleendien.png" width="430">
-</div>
-
-<br>
-
-網路中一樣有此概念, protocal 會說明在傳輸時的 Byte Order 為何, **大部分為 Big Endian**, 然而在電腦與電腦傳輸前都需要先將自己電腦的 byte order(**Host Byte Order**) 轉換為 Network Byte Order 才可以正常傳輸, socket 中定義好了 function 可以做轉換,(如果 host byte order 已為 big endian 則不需要做轉換)
-
-|Function|Description|
-|---|---|
-|htons()|Host to Network Short|
-|htonl()|Host to Network Long|
-|ntohl()|Network to Host Long|
-|ntohs()|Network to Host Short|
-
-function define:
-
-```c
-unsigned short htons(unsigned short hostshort) 
-// This function converts 16-bit (2-byte) quantities 
-// from host byte order to network byte order.
-
-unsigned long htonl(unsigned long hostlong)
-// This function converts 32-bit (4-byte) quantities
-// from host byte order to network byte order.
-
-unsigned short ntohs(unsigned short netshort) 
-// This function converts 16-bit (2-byte) quantities 
-// from network byte order to host byte order.
-
-unsigned long ntohl(unsigned long netlong)
-// This function converts 32-bit quantities 
-// from network byte order to host byte order.
-```
-
 ---
+
 
 ## socket core function
 
@@ -474,11 +475,9 @@ int recvfrom(int sockfd, void *buf, int len, unsigned int flags,
 
 ## raw socket
 
-### non-raw socket : 
-
 在 application 傳輸資料的過程中, 會需要經由一層層 layer 包裝 packet, 包含加上 source ip address, destination ip address等; 而在接收端, 我們收到 packet 之後要將 packet 的 header 給拆掉並根據 protocal 往上傳遞給各層後最後將 data 傳給 application。
 
-如下圖 non-raw socket 可以繞過 OSI model 將 package 送到 application 中, 因此可以實現 sniffer, IP Spoofing Packets 等功能, 注意 **raw socket requires superuser rights** !!!
+如下圖 raw socket 可以繞過 OSI model 將 package 送到 application 中, 因此可以實現 sniffer, IP Spoofing Packets 等功能, 注意 **raw socket requires superuser rights** !!!
 
 <div>
     <img src="img/packet.png" width="550" height="200">
@@ -498,9 +497,145 @@ int recvfrom(int sockfd, void *buf, int len, unsigned int flags,
 raw_socket = socket(AF_INET, SOCK_RAW, int protocol);
 ```
 
+### Examples
+
 <details>
-	<summary>Using raw socket implement ping<summary>
+	<summary>Using raw socket implement ping</summary>
 	
+</br>
+
+先簡單測試看看能否送出 ICMP request:
+
+```c
+#include <iostream>
+#include <string.h>
+#include <sys/types.h>   
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <netinet/ip_icmp.h>
+#include <arpa/inet.h>
+
+int main(){
+
+    int socket_fd = socket(AF_INET,SOCK_RAW,IPPROTO_ICMP);
+    if(socket_fd<0){
+        perror("Error of create socket");
+        exit(-1);
+    }
+
+    struct iphdr* ipptr;
+    struct icmphdr* icmpptr = new icmphdr();
+    struct sockaddr_in* des = new sockaddr_in();
+
+    icmpptr->type = ICMP_ECHO;
+    icmpptr->code = 0;
+    icmpptr->checksum = 0;
+    // icmpptr->un.echo.id = 0;
+    // icmpptr->un.echo.sequence = 0;
+
+    des->sin_addr.s_addr = inet_addr("8.8.8.8");
+    des->sin_family = PF_INET;
+
+    int num = sendto(socket_fd, icmpptr, sizeof(*icmpptr), 0, (struct sockaddr*)des, sizeof(*des));
+
+    std::cout<<"test"<<std::endl;
+
+    if(num<0){
+        perror("Error send");
+        exit(-1);
+    }
+
+    return 0;
+}
+```
+
+利用 wireshark 看看可以發現成功送出了一個 ICMP request, 而且 checksum 還是不對情況:
+
+![](img/icmprequest.png)
+
+接著加上 checksum 測試:
+
+```c
+u_int16_t checksum(unsigned short *buf, int size){
+	unsigned long sum = 0;
+	while (size > 1) {
+		sum += *buf;
+		buf++;
+		size -= 2;
+	}
+	if (size == 1)
+		sum += *(unsigned char *)buf;
+	sum = (sum & 0xffff) + (sum >> 16);
+	sum = (sum & 0xffff) + (sum >> 16);
+	return ~sum;
+}
+```
+
+全部程式碼內容:
+
+```c
+#include <iostream>
+#include <string.h>
+#include <sys/types.h>   
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <netinet/ip_icmp.h>
+#include <arpa/inet.h>
+
+u_int16_t checksum(unsigned short *buf, int size){
+	unsigned long sum = 0;
+	while (size > 1) {
+		sum += *buf;
+		buf++;
+		size -= 2;
+	}
+	if (size == 1)
+		sum += *(unsigned char *)buf;
+	sum = (sum & 0xffff) + (sum >> 16);
+	sum = (sum & 0xffff) + (sum >> 16);
+	return ~sum;
+}
+
+int main(){
+
+    int socket_fd = socket(AF_INET,SOCK_RAW,IPPROTO_ICMP);
+    if(socket_fd<0){
+        perror("Error of create socket");
+        exit(-1);
+    }
+
+    struct iphdr* ipptr;
+    struct icmphdr* icmpptr = new icmphdr();
+    struct sockaddr_in* des = new sockaddr_in();
+
+    icmpptr->type = ICMP_ECHO;
+    icmpptr->code = 0;
+    icmpptr->checksum = checksum((unsigned short *)icmpptr, sizeof(struct icmphdr));
+    // icmpptr->un.echo.id = 0;
+    // icmpptr->un.echo.sequence = 0;
+
+    des->sin_addr.s_addr = inet_addr("8.8.8.8");
+    des->sin_family = PF_INET;
+
+    int num = sendto(socket_fd, icmpptr, sizeof(*icmpptr), 0, (struct sockaddr*)des, sizeof(*des));
+
+    std::cout<<"test"<<std::endl;
+
+    if(num<0){
+        perror("Error send");
+        exit(-1);
+    }
+
+    return 0;
+}
+```
+
+用 wireshark 確認成功:
+
+![](img/icmprequest2.png)
+
 </details>
 
 ---
