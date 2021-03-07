@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
 	// The address family
 	din.sin_family = AF_INET;
 	// Port numbers
-	din.sin_port = htons(7);
+	din.sin_port = htons(53);
 	// IP addresses
 	din.sin_addr.s_addr = inet_addr(argv[3]);
 
