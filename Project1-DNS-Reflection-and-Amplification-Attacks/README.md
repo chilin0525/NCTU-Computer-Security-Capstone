@@ -550,7 +550,7 @@ int main(){
 }
 ```
 
-利用 wireshark 看看可以發現成功送出了一個 ICMP request, 而且 checksum 還是不對情況:
+利用 wireshark 看看可以發現成功送出了一個 ICMP request, 但是 checksum 還是不對情況:
 
 ![](img/icmprequest.png)
 
@@ -638,6 +638,23 @@ int main(){
 
 </details>
 
+發送 UDP by using raw scoket, UDP 中較為簡單的結構為下面左圖, 比較特別的是 UDP checksum 計算方式, UDP checksum 計算方式會與 UDP pseudo header 有關, UDP pseudo header 並非傳輸使用而是單純在計算 checksum 時使用, 詳細計算方式與例子可以參考[PTT : [疑問] UDP Checksum到底要怎麼算?](https://www.ptt.cc/bbs/NTUE-CS100/M.1262621627.A.945.html) 與 [wiki : User Datagram Protocol](https://en.wikipedia.org/wiki/User_Datagram_Protocol#Checksum_computation), checksum 計算方式與程式碼網路上應該都抓的到, 但 pseudo header 還是需要我們把資料填進去
+
+<div>
+	<img src="img/udpheader.png" width="300px">
+	<img src="img/udppseudo.png" width="570px">
+</div>
+
+
+IPv4 UDP Pseudo Header 內容中包含:
+
+1. source IPv4 address : from IP header
+2. destination IPv4 address : from IP header
+3. Zeros : 8 bits zeros
+4. Protocal : 17(0x11)
+5. UDP length : UDP header 裡頭的 length
+
+
 ---
 
 ## check
@@ -652,12 +669,16 @@ Roman
 
 ## source
 
-* 重要文件:
-	* [papers : SOCK_RAW](https://sock-raw.org/papers/sock_raw) 
-	* [linux man-pages](https://man7.org/linux/man-pages/man7/raw.7.html)
-	* [linux.die.net](https://linux.die.net/man/7/raw)
-
+* [重要文件 : papers : SOCK_RAW](https://sock-raw.org/papers/sock_raw) 
+* [重要文件 : linux man-pages](https://man7.org/linux/man-pages/man7/raw.7.html)
+* [重要文件 : linux.die.net](https://linux.die.net/man/7/raw)
 * [tutorialspoint : Unix Socket Tutorial](https://www.tutorialspoint.com/unix_sockets/index.htm)
 * [CSDN : sockaddr和sockaddr_in的區別 ](https://blog.csdn.net/tao546377318/article/details/72780685)
 * [stackoverflow : what is RAW socket in socket programming](https://stackoverflow.com/questions/14774668/what-is-raw-socket-in-socket-programming)
 * [A Guide to Using Raw Sockets](https://www.opensourceforu.com/2015/03/a-guide-to-using-raw-sockets/)
+* [ping實做參考 : wikipedia](https://zh.wikipedia.org/wiki/%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97)
+* [ping實做參考 : 實驗六 ICMP協定分析](http://opencourse.ndhu.edu.tw/pluginfile.php/815/mod_resource/content/0/course_files/Exp6_ICMP.pdf)
+* [ping實做參考 : Raw Sockets and ICMP](https://courses.cs.vt.edu/~cs4254/fall04/slides/raw_1.pdf)
+* [ping實做參考 : How Does Ping Really Work?](http://images.globalknowledge.com/wwwimages/whitepaperpdf/WP_Mays_Ping.pdf)
+* [PTT : [疑問] UDP Checksum到底要怎麼算?](https://www.ptt.cc/bbs/NTUE-CS100/M.1262621627.A.945.html) 
+* [wiki : User Datagram Protocol](https://en.wikipedia.org/wiki/User_Datagram_Protocol#Checksum_computation)
