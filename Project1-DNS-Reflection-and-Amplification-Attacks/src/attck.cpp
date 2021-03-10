@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
 	ip->daddr = inet_addr(argv[3]);
 
 	// Fabricate the UDP header. Source port number, redundant
-	udp->source = htons(1234);//源埠
+	udp->source = htons(7);//源埠
 	// Destination port number
 	udp->dest = htons(53);//目的埠
 	udp->len = htons(sizeof(struct udphdr)+sizeof(DNS));//長度
