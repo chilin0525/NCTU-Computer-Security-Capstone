@@ -114,6 +114,8 @@ unsigned long ntohl(unsigned long netlong)
 // from network byte order to host byte order.
 ```
 
+
+
 ---
 
 ### socket structure 
@@ -682,3 +684,6 @@ Roman
 * [ping實做參考 : How Does Ping Really Work?](http://images.globalknowledge.com/wwwimages/whitepaperpdf/WP_Mays_Ping.pdf)
 * [PTT : [疑問] UDP Checksum到底要怎麼算?](https://www.ptt.cc/bbs/NTUE-CS100/M.1262621627.A.945.html) 
 * [wiki : User Datagram Protocol](https://en.wikipedia.org/wiki/User_Datagram_Protocol#Checksum_computation)
+* [Linux下的raw Socket（原始套接字）程式設計](https://www.itread01.com/content/1547015775.html)
+* [stackoverflow : htons() function in socket programing](https://stackoverflow.com/questions/19207745/htons-function-in-socket-programing)
+* [信息安全課程9：raw socket編程](https://zhuanlan.zhihu.com/p/59327439)
