@@ -656,6 +656,17 @@ IPv4 UDP Pseudo Header 內容中包含:
 4. Protocal : 17(0x11)
 5. UDP length : UDP header 裡頭的 length
 
+---
+
+## TO-DO
+
+先用 command + wireshark 測試 response packet 大小是否大於 query 的十倍:
+
+```
+dig @8.8.8.8 ns1.com TXT
+```
+
+確認可以的話開 wireshark 把 DNS query 內容塞到 code 裡頭的 dns query 
 
 ---
 
@@ -687,3 +698,4 @@ Roman
 * [Linux下的raw Socket（原始套接字）程式設計](https://www.itread01.com/content/1547015775.html)
 * [stackoverflow : htons() function in socket programing](https://stackoverflow.com/questions/19207745/htons-function-in-socket-programing)
 * [信息安全課程9：raw socket編程](https://zhuanlan.zhihu.com/p/59327439)
+* [DNS amplification attack 分析報告](https://cert.tanet.edu.tw/pdf/2015041009042020805172482239587.pdf)
