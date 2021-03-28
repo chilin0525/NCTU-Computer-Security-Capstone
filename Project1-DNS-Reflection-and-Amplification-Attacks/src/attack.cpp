@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
 	// construct udp header
 	struct udphdr *udp = (struct udphdr *)(buffer + sizeof(struct iphdr));
 
-	udp->source = htons(1234);
+	udp->source = htons(atoi(argv[2]));
 	udp->dest 	= htons(53);
 	// udp->len = htons(sizeof(struct udphdr)+sizeof(udpDATA));
 
