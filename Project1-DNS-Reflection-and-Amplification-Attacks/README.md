@@ -658,27 +658,21 @@ IPv4 UDP Pseudo Header 內容中包含:
 
 ---
 
-## TO-DO
-
-先用 command + wireshark 測試 response packet 大小是否大於 query 的十倍:
-
-```
-dig @8.8.8.8 ns1.com TXT
-```
-
-確認可以的話開 wireshark 把 DNS query 內容塞到 code 裡頭的 dns query 
-
----
 
 ## check
 
-* [ ] 要提供 makefile 且命名為 **dns_attack**
-* [ ] 確保可以在乾淨 VM 下執行(不可以有依賴其他 Library )
-* [ ] Report 字數
-* [ ] Report 檔名為: report.pdf 
-* [ ] Report 字體: Times New
-Roman
-* [ ] Report font-size: 11 Or 12
+* test:
+	* [ ] 在 cs2021 VM 下執行(不可以有依賴其他 Library)
+	* [ ] cd 進入 0711282-0716077 資料夾
+	* [ ] make
+	* [ ] sudo ./dns_attack 10.0.0.2 7 8.8.8.8
+	* [ ] 測試其他 src port 用 wireshark 檢查 source port 是否正確
+	* [ ] 檢查學號 0711282 最後 16 bit 是否為 dns query ID
+* Report:
+	* [ ] Report 字數
+	* [ ] Report 檔名為: report.pdf 
+	* [ ] Report 字體: Times New Roman
+	* [ ] Report font-size: 11 Or 12
 
 ## source
 
