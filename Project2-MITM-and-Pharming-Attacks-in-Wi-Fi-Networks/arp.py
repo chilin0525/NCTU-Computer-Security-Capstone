@@ -3,6 +3,7 @@ import os
 import subprocess
 import socket
 import re
+import fcntl
 from scapy.all import *
 
 """
@@ -22,9 +23,12 @@ get information of NIC using "ip addr" command
 def nicInfo():
     proc = subprocess.Popen(["ip addr"],stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
-    ip = out.decode("utf-8")
-    ip = re.findall("\d+\.\d+\.\d+\.\d+\/\d+", ip)
-    return ip
+    ipaddr = out.decode("utf-8")
+    ip = re.findall("\d+\.\d+\.\d+\.\d+\/\d+", ipaddr)
+    mac = re.findall(
+        "[0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}", ipaddr)
+    return ip, mac
+
 
 """
 by "nmap" command, we can scan all device which have 
@@ -54,17 +58,35 @@ def get_default_gateway_linux():
             return socket.inet_ntoa(struct.pack("<L", int(fields[2], 16)))
 
 """
+regular expression for:
 ipV4 : https://stackoverflow.com/questions/4260467/what-is-a-regular-expression-for-a-mac-address
 MAC address : https://stackoverflow.com/questions/4260467/what-is-a-regular-expression-for-a-mac-address
 """
-if __name__ == "__main__":
-    # get ip
-    ip = getHostIp()
-    hostip = ip # without /24
 
-    # get all ip of NIC, search ip in NIC
-    nic = nicInfo()
-    for i in nic:
+"""
+https://stackoverflow.com/questions/159137/getting-mac-address
+"""
+def getHwAddr(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack(
+        '256s', bytes(ifname, 'utf-8')[:15]))
+    return ':'.join('%02x' % b for b in info[18:24])
+
+
+if __name__ == "__main__":
+    
+    # get ip without /24
+    ip      = getHostIp()
+    hostip  = ip 
+    hostmac = getHwAddr('wlo1')
+
+    # ip and MAC address of command "ip addr"
+    # search Ip with subnet mask by using ip we already know
+    # example:
+    #   nicip: 192.168.1.1/24, 192.168.1.2/24, etc
+    #   ip : 192.168.1.1
+    (nicip, nicmac) = nicInfo()
+    for i in nicip:
         # print(ip, " ", i.split("/")[0])
         if(i.split("/")[0]==ip):
             ip = i
@@ -93,10 +115,14 @@ if __name__ == "__main__":
             mac.remove(mac[i])
             break
 
-    print("\n")
+    print("")
 
     print("default Gateway: ", default_gateway)
-    print("Current Ip ", hostip)
+    print("host ip: ", hostip)
+    print("host MAC", hostmac)
+
+    print("")
+
 
     print("----------------------------------------------")
     print("IP                       MAC")
@@ -105,6 +131,6 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
-    packet = ARP(op=2, pdst="192.168.1.106",
-                 hwdst="08:00:27:DF:EF:2C", psrc="192.168.1.104")
-    send(packet)
+    # packet = ARP(op=2, pdst="192.168.1.106",
+    #              hwdst="08:00:27:DF:EF:2C", psrc="192.168.1.104")
+    # send(packet)
