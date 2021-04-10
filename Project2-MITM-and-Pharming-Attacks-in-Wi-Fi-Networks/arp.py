@@ -78,7 +78,7 @@ if __name__ == "__main__":
     # get ip without /24
     ip      = getHostIp()
     hostip  = ip 
-    hostmac = getHwAddr('wlo1')
+    hostmac = getHwAddr('enp0s3')
 
     # ip and MAC address of command "ip addr"
     # search Ip with subnet mask by using ip we already know
@@ -131,6 +131,5 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
-    # packet = ARP(op=2, pdst="192.168.1.106",
-    #              hwdst="08:00:27:DF:EF:2C", psrc="192.168.1.104")
-    # send(packet)
+    packet = ARP(op=2, pdst="10.0.2.5",hwdst="08:00:27:df:ef:2c", psrc="10.0.2.1",hwsrc="08:00:27:25:04:94")
+    send(packet)
