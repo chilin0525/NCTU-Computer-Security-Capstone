@@ -29,6 +29,25 @@ $ sudo nmap -sn 192.168.1.0/24
 
 > sudo is important. Without sudo, you won't get the MAC address output line
 
+
+## packet forwarding
+
+在上面設定完而且開啟 linux 的 ip forwarding 功能後:
+
+```
+$ echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+
+上面重開啟後會被 reset 為0, 使用下面指令將直接永遠開啟讓 device 有 router 的功能:
+
+```
+$ sysctl -w net.ipv4.ip_forward=1
+```
+
+victim 用 ping 發現可以正常收到回應, 但是開啟瀏覽器卻發現沒辦法正常上網, 在 attacker 上用 wireshark 初步診斷問題, 發現 tcp 封包根本沒有轉送出去, 原本希望的路徑是: victim --> attacker --> web server, 但 attacker 收到 tcp 封包後直接回傳 ACK-RST 給 victim 中斷連線:
+
+![](img/ackrst.png)
+
 ## sslsplit
 
 * install:
