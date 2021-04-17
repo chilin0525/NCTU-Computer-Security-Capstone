@@ -171,7 +171,7 @@ if __name__ == "__main__":
 
     enable_port_forwarding()
 
-    for file in os.listdir():
+    for file in os.listdir("logdir/"):
         with open(file) as f:
             for line in f:
                 if ('username=' in line) and ("password" in line):
