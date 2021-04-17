@@ -85,12 +85,12 @@ def enable_port_forwarding():
     flag = str(flag)
     os.system('echo ' + flag + ' > /proc/sys/net/ipv4/ip_forward')
     os.system('iptables -t nat -F')
-    # os.system('iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080')
-    # os.system('iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443')
-    # os.system('iptables -t nat -A PREROUTING -p tcp --dport 587 -j REDIRECT --to-ports 8443')
-    # os.system('iptables -t nat -A PREROUTING -p tcp --dport 465 -j REDIRECT --to-ports 8443')
-    # os.system('iptables -t nat -A PREROUTING -p tcp --dport 993 -j REDIRECT --to-ports 8443')
-    # os.system('iptables -t nat -A PREROUTING -p tcp --dport 5222 -j REDIRECT --to-ports 8080')
+    os.system('iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080')
+    os.system('iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443')
+    os.system('iptables -t nat -A PREROUTING -p tcp --dport 587 -j REDIRECT --to-ports 8443')
+    os.system('iptables -t nat -A PREROUTING -p tcp --dport 465 -j REDIRECT --to-ports 8443')
+    os.system('iptables -t nat -A PREROUTING -p tcp --dport 993 -j REDIRECT --to-ports 8443')
+    os.system('iptables -t nat -A PREROUTING -p tcp --dport 5222 -j REDIRECT --to-ports 8080')
 
 def disable_port_forwarding():
     flag = 0
