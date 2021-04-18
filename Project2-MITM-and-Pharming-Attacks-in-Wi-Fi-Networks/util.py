@@ -1,3 +1,11 @@
+import struct
+import os
+import subprocess
+import socket
+import re
+import fcntl
+from scapy.all import *
+from time import *
 
 """
 get ip address of host
