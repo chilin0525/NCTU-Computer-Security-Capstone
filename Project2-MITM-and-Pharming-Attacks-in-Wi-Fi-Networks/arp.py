@@ -101,7 +101,7 @@ def enable_port_forwarding():
     # os.system('sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080')
     proc = subprocess.Popen(
         ["sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080"],
-        stdout=subprocess.PIPE, 
+        stdout=subprocess.DEVNULL,
         shell=True)
 
 
