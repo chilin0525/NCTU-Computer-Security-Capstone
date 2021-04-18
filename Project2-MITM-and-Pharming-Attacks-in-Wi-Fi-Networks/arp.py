@@ -182,8 +182,8 @@ if __name__ == "__main__":
 
     try:
         while(1):
-            send(victimpacket, verbose=None)
-            send(routerpacket, verbose=None)
+            send(victimpacket, verbose=0)
+            send(routerpacket, verbose=0)
             sleep(2)
     finally:
         print("Done")
