@@ -207,7 +207,7 @@ if __name__ == "__main__":
                             a = [m.start() for m in re.finditer("&", line)]
                             b = [m.start() for m in re.finditer("=", line)]
                             # print(a, b)
-                            print("username= %-30s  password= %-30s", % (line[b[0]+1:a[0]], line[b[1]+1:a[1]]))
+                            print("username= %-30s  password= %-30s" % (line[b[0]+1:a[0]], line[b[1]+1:a[1]]))
             sleep(2)
     finally:
         print("Done")
