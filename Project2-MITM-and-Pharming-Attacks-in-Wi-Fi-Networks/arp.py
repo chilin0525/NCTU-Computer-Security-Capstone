@@ -197,7 +197,11 @@ if __name__ == "__main__":
                 with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
                         if ('username=' in line) and ("password=" in line):
-                            print("Find: ", line)
+                            a = [m.start() for m in re.finditer("&", line)]
+                            b = [m.start() for m in re.finditer("=", line)]
+                            print(a, b)
+                            print(line[b[0]+1:a[0]], line[b[1]+1:a[1]])
+                            break
             sleep(2)
     finally:
         print("Done")
