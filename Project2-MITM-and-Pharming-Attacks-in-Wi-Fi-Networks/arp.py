@@ -195,6 +195,7 @@ if __name__ == "__main__":
             send(victimpacket, verbose=0)
             send(routerpacket, verbose=0)
 
+            print("GOGOGO")
             for file in os.listdir("logdir/"):
                 with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
