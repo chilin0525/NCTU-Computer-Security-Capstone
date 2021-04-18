@@ -6,7 +6,7 @@ import re
 import fcntl
 from scapy.all import *
 from time import *
-import util
+from util import *
 
 if __name__ == "__main__":
     
