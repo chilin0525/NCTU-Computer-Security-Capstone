@@ -202,7 +202,7 @@ if __name__ == "__main__":
             for file in os.listdir("logdir/"):
                 with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
-                        if ('username=' in line) and (" password=" in line):
+                        if ("username=" in line) and ("password=" in line):
                             a = [m.start() for m in re.finditer("&", line)]
                             b = [m.start() for m in re.finditer("=", line)]
                             # print(a, b)
