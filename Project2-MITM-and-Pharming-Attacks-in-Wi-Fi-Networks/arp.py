@@ -180,10 +180,10 @@ if __name__ == "__main__":
 
     enable_port_forwarding()
 
-    while(1):
-        try:
+    try:
+        while(1):
             send(victimpacket)
             send(routerpacket)    
             sleep(2)
-        finally:
-            print("Done")
+    finally:
+        print("Done")
