@@ -4,7 +4,6 @@ import subprocess
 import socket
 import re
 import fcntl
-import keyboard
 from scapy.all import *
 from time import *
 
@@ -183,12 +182,8 @@ if __name__ == "__main__":
 
     while(1):
         try:
-            if(keyboard.is_pressed('q')):
-                print("Detect keyboard q input, Bye")
-                break
-        except:
             send(victimpacket)
             send(routerpacket)    
             sleep(2)
-
-    print("Done")
+        finally:
+            print("Done")
