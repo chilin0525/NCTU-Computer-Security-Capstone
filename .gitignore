@@ -1,2 +1,6 @@
 .vscode
 test*
+
+Project2-MITM-and-Pharming-Attacks-in-Wi-Fi-Networks/logdir/*.log
+
+*/test.py

@@ -7,15 +7,7 @@
 * Print out the username and password which a user submits to the website https://e3.nycu.edu.tw/login/index.php using any of the Wi-Fi devices or VMs
 
 
-
-## pharm_attack
-
-* Print out the IP/MAC addresses of all the Wi-Fi devices or VMs except for Attacker and AP/Host
-
-* Redirect the NYCU home page (www.nycu.edu.tw) to the phishing page (140.113.207.246)
-
-
-## show IP/MAC address
+### show IP/MAC address
 
 此次作業中兩者首要之務皆為要求先 print 所有與 AP 連線的裝置的 IP/MAC address, 所給的 HINT 為可以使用: **‘scapy’ and ‘netifaces’ library in Python** or **commands ‘nmap’,‘arp’, and ‘route’**
 
@@ -30,7 +22,7 @@ $ sudo nmap -sn 192.168.1.0/24
 > sudo is important. Without sudo, you won't get the MAC address output line
 
 
-## packet forwarding
+### packet forwarding
 
 在上面設定完而且開啟 linux 的 ip forwarding 功能後:
 
@@ -48,7 +40,7 @@ victim 用 ping 發現可以正常收到回應, 但是開啟瀏覽器卻發現�
 
 ![](img/ackrst.png)
 
-## sslsplit
+### sslsplit
 
 * install:
 
@@ -56,3 +48,15 @@ victim 用 ping 發現可以正常收到回應, 但是開啟瀏覽器卻發現�
     $ sudo apt-get update -y
     $ sudo apt-get install -y sslsplit
     ```
+
+---
+
+## pharming attack
+
+* NetfilterQueue:
+
+    * install:
+        * **does not support Python3.6+**, last release is 2017 = =
+        * ```pip3 install NetfilterQueue```
+    * API:
+        * [NetfilterQueue 0.8.1](https://pypi.org/project/NetfilterQueue/)
