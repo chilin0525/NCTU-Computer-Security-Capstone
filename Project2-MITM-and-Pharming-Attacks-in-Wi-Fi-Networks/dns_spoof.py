@@ -30,10 +30,15 @@ def process_packet(packet):
 
     return packet.accept()
 
-def dns_init():
-    queue = netfilterqueue.NetfilterQueue()
-    queue.bind(0, process_packet)
-    queue.run()
+class dns_init(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+    def run(self):
+        self.queue = netfilterqueue.NetfilterQueue()
+        self.queue.bind(0, process_packet)
+        self.queue.run()
+    def dns_stop(self):
+        self.queue.unbind()
 
 if __name__ == "__main__":
     
@@ -113,7 +118,8 @@ if __name__ == "__main__":
         'iptables -I INPUT -j NFQUEUE --queue-num 0')
 
     # build thread
-    t = threading.Thread(target = dns_init)
+    t = dns_init()
+    t.daemon = True
     t.start()
 
     try:
@@ -144,8 +150,10 @@ if __name__ == "__main__":
             #print(" ")
             #print("-----------------------------------------------------------------------------")
             sleep(2)
-    finally:
-        t.join()
+    except KeyboardInterrupt:
+        t.dns_stop()
+        #t.join()
+        os.system('iptables --flush')
         print("Done")
 
 
