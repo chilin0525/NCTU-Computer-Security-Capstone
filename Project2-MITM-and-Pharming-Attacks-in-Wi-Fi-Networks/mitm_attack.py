@@ -118,3 +118,6 @@ if __name__ == "__main__":
                             print("username: ", username, " password: ",  passwd)
             sending_flag = False
             sleep(1)
+    finally:
+        print("done")
+        
