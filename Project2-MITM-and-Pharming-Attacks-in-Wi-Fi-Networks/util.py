@@ -121,14 +121,6 @@ def enable_port_forwarding():
         'iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080')
     os.system(
         'iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443')
-    os.system(
-        'iptables -t nat -A PREROUTING -p tcp --dport 587 -j REDIRECT --to-ports 8443')
-    os.system(
-        'iptables -t nat -A PREROUTING -p tcp --dport 465 -j REDIRECT --to-ports 8443')
-    os.system(
-        'iptables -t nat -A PREROUTING -p tcp --dport 993 -j REDIRECT --to-ports 8443')
-    os.system(
-        'iptables -t nat -A PREROUTING -p tcp --dport 5222 -j REDIRECT --to-ports 8080')
 
 
 def disable_port_forwarding():
@@ -147,6 +139,7 @@ def sslsplit():
         ["sslsplit -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080"],
         stdout=subprocess.PIPE,
         shell=True)
+
 
 def iptables_init():
     os.system("iptables -F")
