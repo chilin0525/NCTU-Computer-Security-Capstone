@@ -114,7 +114,7 @@ if __name__ == "__main__":
                     for line in f:
                         if ("username=" in line) and ("password=" in line):
                             # print(type(line), line)
-                            if(re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line)[0] != None):
+                            if(re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line) != None):
                                 (username, passwd) = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line)[0]
                                 print("username: ", unquote(username)," password: ",  unquote(passwd))
             sending_flag = False
