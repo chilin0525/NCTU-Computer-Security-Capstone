@@ -23,6 +23,8 @@ def getHostIp():
 
 """
 get information of NIC using "ip addr" command
+and we can get all information about ip/subnet mask and return it
+Ex: ip = [10.1.10.1/24, 127.0.0.1/24]
 """
 
 
@@ -34,6 +36,13 @@ def nicInfo():
     # mac = re.findall(
     #     "[0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}[:][0-9a-fA-F]{2}", ipaddr)
     return ip
+
+
+"""
+by using ```ip route``` command we can get information about gateway
+and also we can get which network card we using, 
+it is important because we need NIC name as a parameter to get MAC address in getMac(NIC name) function
+"""
 
 
 def getNic():
@@ -99,8 +108,7 @@ def getMac(ifname):
 https://unix.stackexchange.com/questions/14056/what-is-kernel-ip-forwarding
 https://linuxconfig.org/how-to-turn-on-off-ip-forwarding-in-linux
 
-開啟 linux ip forwarding, 可以使整台機器像台 router, 
-一旦收到不屬於此 local machine 的封包, 就往 gateway 送
+if reveived some packet which is not belong to local machine, send out the packet.
 """
 
 
@@ -139,3 +147,7 @@ def sslsplit():
         ["sslsplit -l connections.log -j /tmp/sslsplit/ -S logdir/ -k ca.key -c ca.crt ssl 0.0.0.0 8443 tcp 0.0.0.0 8080"],
         stdout=subprocess.PIPE,
         shell=True)
+
+def iptables_init():
+    os.system("iptables -F")
+    os.system("iptables -t nat -F")
