@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
             newuser = checkNewUser(ans,preans)
             for i in newuser:
-                print("username: ",i[0], "password", i[1])
+                print("username: ", unquote(i[0]), "password", unquote(i[1]))
 
             preans = ans.copy()
             ans = []
