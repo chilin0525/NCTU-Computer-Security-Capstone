@@ -110,6 +110,7 @@ if __name__ == "__main__":
             # get all username and password in log file
             print(" ")
             for file in os.listdir("logdir/"):
+                print(file, " " , tpye(file))
                 f = open("logdir/" + file, 'r')
                 line = f.read()
                 if ("username=" in line) and ("password=" in line):
