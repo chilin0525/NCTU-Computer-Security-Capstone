@@ -61,8 +61,8 @@ link : https://superuser.com/questions/887887/different-behavior-sudo-nmap-vs-ju
 
 
 def nmap(ip):
-    tmp = "nmap -sn -n " + ip
-    print("Command is ", tmp)
+    # tmp = "nmap -sn -n " + ip
+    # print("Command is ", tmp)
     proc = subprocess.Popen([tmp], stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
     out2 = out.decode("utf-8")

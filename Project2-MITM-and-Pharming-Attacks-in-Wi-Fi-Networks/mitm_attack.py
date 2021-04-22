@@ -76,6 +76,7 @@ if __name__ == "__main__":
     for i in range(0,len(ip)):
         print("%-18s       %s" % (ip[i],mac[i]))
 
+    print()
     # enable ip forwarding of Linux device
     enable_port_forwarding()
 
@@ -111,6 +112,9 @@ if __name__ == "__main__":
                     send(routerpacket, verbose=0)
                     if(sending_flag):
                         print("Send to: ",ip[j]," ",mac[j])
+            
+            if(sending_flag):
+                print("")
 
             # get all username and password in log file
             for file in os.listdir("logdir/"):
