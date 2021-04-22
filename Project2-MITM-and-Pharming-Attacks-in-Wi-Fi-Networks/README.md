@@ -60,3 +60,6 @@ victim 用 ping 發現可以正常收到回應, 但是開啟瀏覽器卻發現�
         * ```pip3 install NetfilterQueue```
     * API:
         * [NetfilterQueue 0.8.1](https://pypi.org/project/NetfilterQueue/)
+
+
+## report link : https://docs.google.com/document/d/1UMfpEAWTXPlP57mHasa24kYqOxnc_tftqwv1ILeY5Hk/edit
