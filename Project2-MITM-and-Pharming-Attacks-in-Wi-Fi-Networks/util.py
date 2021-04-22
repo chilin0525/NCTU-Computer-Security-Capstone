@@ -144,3 +144,10 @@ def sslsplit():
 def iptables_init():
     os.system("iptables -F")
     os.system("iptables -t nat -F")
+
+
+def checkNewUser(ans, preans):
+    tmpans = ans.copy()
+    for i in preans:
+        tmpans.remove(i)
+    return tmpans

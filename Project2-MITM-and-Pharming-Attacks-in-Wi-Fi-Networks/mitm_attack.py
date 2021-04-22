@@ -124,7 +124,9 @@ if __name__ == "__main__":
                                 ans.append((username,passwd))
             sending_flag = False
 
-            print(item for item in ans if item not in preans)
+            newuser = checkNewUser(ans,preans)
+            for i in newuser:
+                print("username: ",i[0], "password", i[1])
 
             preans = ans.copy()
             ans = []
