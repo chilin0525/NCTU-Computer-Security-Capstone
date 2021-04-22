@@ -41,6 +41,9 @@ class dns_init(threading.Thread):
         self.queue.unbind()
 
 if __name__ == "__main__":
+
+    # init iptables
+    iptables_init()
     
     ip          = getHostIp()
     nic         = getNic()
@@ -63,7 +66,7 @@ if __name__ == "__main__":
     
     # execute "nmap" 
     result = nmap(ip)
-    print(result)
+    # print(result)
 
     # we can get all ip and mac address of all device which in same subnet from the result of nmap
     # regular expression for IPv4, get the list of all device's ip address
@@ -88,13 +91,13 @@ if __name__ == "__main__":
             break
     
     # show all device's ip and mac address
-    print("")
+    # print("")
 
-    print("nic card: ", nic)
-    print("router Ip: %-18s MAC: %s" % (routerIp,routerMac))
-    print("host   Ip: %-18s MAC: %s" % (hostip, hostmac))
+    # print("nic card: ", nic)
+    # print("router Ip: %-18s MAC: %s" % (routerIp,routerMac))
+    # print("host   Ip: %-18s MAC: %s" % (hostip, hostmac))
 
-    print("")
+    # print("")
 
     print("----------------------------------------------")
     print("IP                       MAC")
