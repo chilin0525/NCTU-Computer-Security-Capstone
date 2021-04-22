@@ -124,7 +124,7 @@ if __name__ == "__main__":
                                 ans.append((username,passwd))
             sending_flag = False
 
-            print(ans-preans)
+            print(item for item in ans if item not in preans)
 
             preans = ans.copy()
             ans = []
