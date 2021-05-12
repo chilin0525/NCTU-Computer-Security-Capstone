@@ -4,3 +4,5 @@ test*
 Project2-MITM-and-Pharming-Attacks-in-Wi-Fi-Networks/logdir/*.log
 
 */test.py
+
+Project2-MITM-and-Pharming-Attacks-in-Wi-Fi-Networks/__pycache__
