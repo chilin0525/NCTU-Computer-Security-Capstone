@@ -43,6 +43,7 @@ sftp = s.open_sftp()
 sftp.put('./install.py', 'install.py')
 sftp.put('./build.sh', 'build.sh')
 sftp.put('./infected.sh', 'infected.sh')
+sftp.put('./temp_cat', 'temp_cat.sh')
 
 stdin, stdout, stderr = s.exec_command("chmod +x build.sh")
 print(stdout.read().decode())
