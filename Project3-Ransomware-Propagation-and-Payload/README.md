@@ -9,6 +9,4 @@
 * task 2
 	* 目前需要使用 cat 來把壓縮檔接在 infected.sh 後面
 		* 或許把這步驟放在 server 上執行, 或使用其他方法
-	* 還沒處理 size 的部份
-	* test.py 內容還沒寫
-	* 不清楚如何在最後加上指定 byte (0xdeadbeaf)
+	* 已處理 size 和最後的 byte , 但不確定這樣最後是否正確
