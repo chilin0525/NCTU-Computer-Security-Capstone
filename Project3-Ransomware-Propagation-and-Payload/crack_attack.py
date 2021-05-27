@@ -25,7 +25,9 @@ def main():
     dict = dictionary()
 
     ssh  = ssh_data("csc2021", "csc2021", 22)
-    ssh.passwd = dict.attack()
+    # ssh.passwd = dict.attack()
+
+    change_install_file_text()
 
     s = paramiko.SSHClient()
     s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
