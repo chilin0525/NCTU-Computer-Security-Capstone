@@ -1,14 +1,20 @@
-<mxfile host="app.diagrams.net" modified="2021-05-17T05:54:34.492Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36" etag="-o354LUq_pBq1g75ySXB" version="14.3.2" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-29T09:31:25.849Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36" etag="1MJI_mJuWIpAZ32NAff9" version="14.7.2" type="github">
   <diagram id="Ww_qnuIjE5x3cNlsC0j9" name="Page-1">
-    <mxGraphModel dx="1182" dy="688" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1030" dy="685" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="jVQ83cVJ5n_UA02Piwop-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="40" y="60" width="300" height="650" as="geometry" />
-        </mxCell>
         <mxCell id="jVQ83cVJ5n_UA02Piwop-6" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="510" y="60" width="240" height="660" as="geometry" />
+          <mxGeometry x="510" y="60" width="240" height="580" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-24" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="570" y="555" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-12" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="570" y="355" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jVQ83cVJ5n_UA02Piwop-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="60" width="300" height="490" as="geometry" />
         </mxCell>
         <mxCell id="jVQ83cVJ5n_UA02Piwop-7" value="&lt;font style=&quot;font-size: 18px&quot;&gt;Attacker&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="169" y="90" width="80" height="20" as="geometry" />
@@ -16,43 +22,86 @@
         <mxCell id="jVQ83cVJ5n_UA02Piwop-8" value="&lt;font style=&quot;font-size: 18px&quot;&gt;Victim&lt;/font&gt;" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="600" y="90" width="60" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="132" y="190" width="167" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-2" value="&lt;span style=&quot;font-size: 14px&quot;&gt;execute ./attacker_server&lt;/span&gt;" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="130" y="210" width="170" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-3" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="213" y="143" as="sourcePoint" />
-            <mxPoint x="213" y="183" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-4" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="50" y="315" width="280" height="105" as="geometry" />
-        </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-5" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="214" y="260" as="sourcePoint" />
-            <mxPoint x="214" y="300" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rPoK7AbFEsscb3aZ_IW5-10">
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="rPoK7AbFEsscb3aZ_IW5-4">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="500" y="346" as="targetPoint" />
+            <mxPoint x="500" y="227.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-10" value="&lt;span style=&quot;color: rgb(0 , 0 , 0) ; font-family: &amp;#34;helvetica&amp;#34; ; font-size: 14px ; font-style: normal ; font-weight: 400 ; letter-spacing: normal ; text-align: center ; text-indent: 0px ; text-transform: none ; word-spacing: 0px ; background-color: rgb(248 , 249 , 250) ; display: inline ; float: none&quot;&gt;execute ./crack_attack&lt;br&gt;1. find ~/csc2021/material/victim.dat&lt;br&gt;2. combination&lt;br&gt;3. cracking the password&lt;br&gt;&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="60" y="331" width="270" height="30" as="geometry" />
+        <mxCell id="rPoK7AbFEsscb3aZ_IW5-4" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="175" width="280" height="105" as="geometry" />
         </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-13" value="SSH dictionary attack" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="349" y="311" width="130" height="20" as="geometry" />
+        <mxCell id="rPoK7AbFEsscb3aZ_IW5-5" value="" style="endArrow=classic;html=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="214" y="120" as="sourcePoint" />
+            <mxPoint x="214" y="160" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-15" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="530" y="315" width="200" height="145" as="geometry" />
+        <mxCell id="rPoK7AbFEsscb3aZ_IW5-10" value="&lt;span style=&quot;color: rgb(0 , 0 , 0) ; font-family: &amp;#34;helvetica&amp;#34; ; font-size: 14px ; font-style: normal ; font-weight: 400 ; letter-spacing: normal ; text-align: center ; text-indent: 0px ; text-transform: none ; word-spacing: 0px ; background-color: rgb(248 , 249 , 250) ; display: inline ; float: none&quot;&gt;execute ./crack_attack&lt;br&gt;1. find ~/csc2021/material/victim.dat&lt;br&gt;2. combination&lt;br&gt;3. cracking the password&lt;br&gt;&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="191" width="270" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="rPoK7AbFEsscb3aZ_IW5-16" value="CAT" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="534" y="319" width="40" height="20" as="geometry" />
+        <mxCell id="rPoK7AbFEsscb3aZ_IW5-13" value="SSH dictionary attack" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="349" y="191" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rPoK7AbFEsscb3aZ_IW5-15" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="520" y="175" width="200" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-1" value="使用 sftp 偷渡:&lt;br&gt;1.&amp;nbsp; install.py&lt;br&gt;2. build.sh&lt;br&gt;3. cat" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="240" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-3" value="有 infect cat 的素材後&lt;br&gt;1. chmod +x build.sh&lt;br&gt;2. ./build.sh" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="550" y="180" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-5" value="製作 infected 的 cat:&lt;br&gt;最後將素材刪除" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="555" y="300" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-8" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="570" y="455" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="lwm_Z2Omf9RSsGKZGNPV-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="485" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-7" value="利用帳號密碼相同以及 ip&lt;br&gt;回到 attacker 端下載 worm.py&lt;br&gt;下載完成後執行 worm.py&lt;br&gt;" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];rounded=0;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="568" y="460" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-9" value="install.py" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="508" y="435" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-6" value="cat 被執行後:&lt;br&gt;1. 執行 install,py&amp;nbsp;" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="600" y="370" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-13" value="cat" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="520" y="350" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="lwm_Z2Omf9RSsGKZGNPV-15">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="485" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-15" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="169" y="455" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-16" value="worm.py" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="199" y="475" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-20" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="657" y="420" as="sourcePoint" />
+            <mxPoint x="657" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-21" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="658" y="519" as="sourcePoint" />
+            <mxPoint x="658" y="549" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-22" value="1. Pop up window&lt;br&gt;2. 加密 /Pictures/*.jpg&lt;br&gt;" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="590" y="570" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lwm_Z2Omf9RSsGKZGNPV-25" value="傳送 worm.py" style="text;html=1;resizable=0;autosize=1;align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="369" y="440" width="90" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
