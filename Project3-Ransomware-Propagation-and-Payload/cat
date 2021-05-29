@@ -12,7 +12,7 @@ process_tar(){
 
 PAYLOAD_LINE=$(awk '/^__PAYLOAD_BEGINS__/ { print NR + 1; exit 0; }' $0)
 
-PAYLOAD_END=$(awk '/^__PAYLOAD_END__/ { print NR + 1; exit 0; }' $0)
+PAYLOAD_END=$(awk '/^__PAYLOAD_END__/ { print NR ; exit 0; }' $0)
 
 interval=`expr $PAYLOAD_END - $PAYLOAD_LINE`
 
