@@ -26,7 +26,7 @@ def main():
     dict = dictionary()
 
     ssh  = ssh_data("csc2021", "csc2021", 22)
-    # ssh.passwd = dict.attack()
+    ssh.passwd = dict.attack()
 
     change_install_file_text(ssh, filepath)
 

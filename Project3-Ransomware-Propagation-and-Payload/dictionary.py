@@ -9,7 +9,7 @@ victim_passwd = ""
 index = 0
 thread_idx_list = []
 lock = threading.Lock()
-THREAD_NUMBER = 1
+THREAD_NUMBER = 4
 
 
 class FastTransport(paramiko.Transport):
