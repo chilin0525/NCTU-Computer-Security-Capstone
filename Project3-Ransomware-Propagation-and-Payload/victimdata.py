@@ -1,5 +1,4 @@
-# fp = open("/home/csc2021/materials/victim.dat","r")
-fp = open("material_backup/victim.dat")
+fp = open("/home/csc2021/materials/victim.dat","r")
 
 victim_data = []
 lines = fp.readlines()
