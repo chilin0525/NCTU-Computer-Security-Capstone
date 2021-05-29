@@ -37,7 +37,7 @@ def main():
     stdin, stdout, stderr = s.exec_command("cp cat temp_cat")
     print(stdout.read().decode())
 
-    stdin, stdout, stderr = s.exec_command("rm temp_cat")
+    stdin, stdout, stderr = s.exec_command("rm cat")
     print(stdout.read().decode())
 
     sftp = s.open_sftp()
