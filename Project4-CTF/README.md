@@ -24,7 +24,7 @@
 
 		* 如果一開始沒有輸入 0xDEADBEAF 且 file decript 不存在那回傳值就會是 -1, 將沒辦法有第二次輸入機會
 	
-		![](img/DEADBEAF.png)
+		![](../img/DEADBEAF.png)
 
 ### ref
 
@@ -42,16 +42,16 @@
 
 ## 3-translator
 
-![](img/3-1.png)
-![](img/3-2.png)
+![](../img/3-1.png)
+![](../img/3-2.png)
 
 compare 的內容:
 
-![](img/3-3.png)
+![](../img/3-3.png)
 
 再往上:
 
-![](img/3-4.png)
+![](../img/3-4.png)
 
 <br>
 
@@ -99,7 +99,7 @@ print(sol,end="")
 
 將會得到:
 
-![](img/4.png)
+![](../img/4.png)
 
 因此只要把 win address 寫入即可
 
@@ -128,9 +128,9 @@ Procedure Linkage Table (PLT), 在 function address 被解析之前, GOT 會指�
 ### sol
 
 
-![](img/5-1.png)
+![](../img/5-1.png)
 
-![](img/5-2.png)
+![](../img/5-2.png)
 
 測試時先用 A 看會出現在哪個位置:
 
@@ -140,7 +140,7 @@ str += "AAAAAAAA"
 print(str)
 ```
 
-![](img/5-3.png)
+![](../img/5-3.png)
 
 利用輸入時輸入常數把 0x404038 寫入 stack, 把 A 換成 0x404038, 再利用 %n 寫入 0x4011b6
 
@@ -169,11 +169,11 @@ print(str)
 
 第四個看起來就是 RSP 但是失敗了, 第三八個看起來也可以行, 雖然與 rbp 差了 0x20 不過到時候多扣即可 (原本扣 0x100 改成扣 0x120)
 
-![](img/6-1.png)
+![](../img/6-1.png)
 
-![](img/6-2.png)
+![](../img/6-2.png)
 
-![](img/6-3.png)
+![](../img/6-3.png)
 
 
 ### ref
@@ -189,7 +189,7 @@ print(str)
 ### register
 
 * 8 個 32-bit general purpose registers, 如下圖
-	![](img/register.png)
+	![](../img/register.png)
 	* register name not case-sensitive, 所以 ```EAX``` 等於 ```eax```
 	* last significant 2 byte of ```EAX``` 稱為 AX, 其中又可以將 AX 裡頭再分為 AH 與 AL
 	* special purposes 
@@ -253,7 +253,7 @@ print(str)
 * why need?
 	* 用來儲存機器狀態, 例如 program counter, machine registers 等等
 	
-	![](img/ar.png)
+	![](../img/ar.png)
 
 		* 當今天我們沒有 AR 時會發生什麼事, 以上圖為例我們在 ```main``` 裡頭已經寫好 a, b 的值, 接著呼叫 ```foo```, 然後原本的 a, b 值就馬上被覆蓋過去了, 再回到 ```main``` 時進行 a+b 就會有問題, 因此我們需要在 call function 前就先將有用到的東西給備份好
 		* 且 local 只會在 function scope 裡面使用
